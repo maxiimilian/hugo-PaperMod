@@ -21,9 +21,35 @@
 <meta name="google-site-verification" content="{{ .Site.Params.analytics.google.SiteVerificationTag }}" />
 {{- end}}
 <!-- Styles -->
-{{- $stylesheet := (resources.Match "css/*.css") | resources.Concat "assets/css/stylesheet.css" | minify | fingerprint -}}
+{{- $common := (resources.Match "css/*.css") | resources.Concat "assets/css/common.css" }}
+{{- $extended := (resources.Match "css/extended/*.css") | resources.Concat "assets/css/extended.css" }}
+{{- /*  bundle all required css  */}}
+{{- /*  Add extended css after theme style */ -}}
+{{- $stylesheet := (slice $common $extended) | resources.Concat "assets/css/stylesheet.css" | minify }}
+
+{{- if not .Site.Params.assets.disableFingerprinting }}
+{{- $stylesheet := $stylesheet | fingerprint -}}
 <link href="{{ $stylesheet.Permalink }}" integrity="{{ $stylesheet.Data.Integrity }}" rel="preload stylesheet"
     as="style">
+{{- else}}
+<link href="{{ $stylesheet.Permalink }}" rel="preload stylesheet" as="style">
+{{- end}}
+<!-- Search -->
+{{- if (eq .Layout `search`) -}}
+<link rel="preload" as="fetch" href="../index.json" crossOrigin="anonymous">
+{{- $fastsearch := resources.Get "js/fastsearch.js" }}
+{{- $fusejs := resources.Get "js/fuse.js" }}
+{{- if not .Site.Params.assets.disableFingerprinting }}
+{{- $search := (slice $fusejs $fastsearch ) | resources.Concat "assets/js/search.js" | minify | fingerprint }}
+<script defer src="{{ $search.Permalink }}" rel="preload" as="script" onload="loadSearch();"
+    integrity="{{ $search.Data.Integrity }}">
+</script>
+{{- else}}
+{{ $search := (slice $fusejs $fastsearch ) | resources.Concat "assets/js/search.js" | minify }}
+<script defer src="{{ $search.Permalink }}" rel="preload" as="script" onload="loadSearch();"></script>
+{{- end}}
+{{- end -}}
+
 <!-- Favicons -->
 <link rel="icon" href="{{- .Site.Params.assets.favicon | default "favicon.ico" | absURL -}}">
 <link rel="icon" type="image/png" sizes="16x16" href="
