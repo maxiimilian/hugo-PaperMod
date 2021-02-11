@@ -1,5 +1,5 @@
 {{- with .cxt}} {{/* Apply proper context from dict */}}
-{{- if .Params.cover.image }}
+{{- if (and .Params.cover.image (not $.isHidden)) }}
 {{- $alt := (.Params.cover.alt | default .Params.cover.caption | plainify) }}
 <figure class="entry-cover">
     {{- $addLink := (and .Site.Params.cover.linkFullImages (not $.IsHome)) }}
@@ -9,7 +9,7 @@
             rel="noopener noreferrer">{{ end -}}
         {{- $sizes := (slice "360" "480" "720" "1080" "1500") }}
         {{- $processableFormats := (slice "jpg" "jpeg" "png" "tif" "bmp" "gif") }}
-        {{- $prod := (eq (getenv "HUGO_ENV") "production" | or (eq .Site.Params.env "production")) }}
+        {{- $prod := (hugo.IsProduction | or (eq .Site.Params.env "production")) }}
         {{- if (and (in $processableFormats $cover.MediaType.SubType) (ne .Site.Params.cover.responsiveImages false) (eq $prod true)) }}
         <img srcset="{{- range $size := $sizes -}}
                         {{- if (ge $cover.Width $size) -}}

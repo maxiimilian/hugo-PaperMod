@@ -6,13 +6,7 @@
 
 html {
     -webkit-tap-highlight-color: transparent;
-    scroll-behavior: smooth
-}
-
-@media screen and (prefers-reduced-motion: reduce) {
-    html {
-        scroll-behavior: auto
-    }
+    overflow-y: scroll;
 }
 
 a,
@@ -86,7 +80,7 @@ table {
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
-    overflow-x: scroll;
+    overflow-x: auto;
     word-break: keep-all
 }
 
@@ -97,7 +91,6 @@ textarea {
     font: inherit;
     background: 0 0;
     border: 0;
-    -webkit-appearance: none
 }
 
 input,
@@ -121,13 +114,8 @@ img {
     max-width: 100%
 }
 
-::-webkit-scrollbar {
-    width: 10px;
-    height: 6px
-}
-
 ::-webkit-scrollbar-track {
-    background: var(--theme)
+    background: 0 0
 }
 
 .list:not(.dark)::-webkit-scrollbar-track {
@@ -136,16 +124,14 @@ img {
 
 ::-webkit-scrollbar-thumb {
     background: var(--tertiary);
+    border: 5px solid var(--theme);
     border-radius: var(--radius)
+}
+
+.list:not(.dark)::-webkit-scrollbar-thumb {
+    border: 5px solid var(--code-bg)
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--secondary)
-}
-
-@media screen and (max-width:800px) {
-    ::-webkit-scrollbar {
-        width: 8px;
-        height: 2px
-    }
 }

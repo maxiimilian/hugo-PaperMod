@@ -1,14 +1,20 @@
+.page-header,
 .post-header {
     margin: 24px auto var(--content-gap) auto
 }
 
 .post-title {
     margin-bottom: 2px;
-    font-size: 40px;
-    transform: translateX(-2px)
+    font-size: 40px
 }
 
-.post-meta {
+.post-description {
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.post-meta,
+.breadcrumbs {
     color: var(--secondary);
     font-size: 14px;
     display: flex;
@@ -20,6 +26,10 @@
     list-style: none;
     margin: auto 3px;
     box-shadow: 0 1px 0 var(--secondary)
+}
+
+.breadcrumbs a {
+    font-size: 16px;
 }
 
 .post-content {
@@ -61,7 +71,7 @@
 
 .post-content a,
 .toc a:hover {
-    box-shadow: 0 1px 0 var(--primary)
+    box-shadow: 0 1px 0
 }
 
 .post-content a code {
@@ -122,7 +132,7 @@
 }
 
 .post-content table th,
-.post-content table:not(.highlighttable) td {
+.post-content table:not(.highlighttable, .highlight table, .gist .highlight) td {
     min-width: 80px;
     padding: 12px 8px;
     line-height: 1.5;
@@ -138,9 +148,13 @@
     margin: auto 0
 }
 
-.post-content .highlight,
+.post-content .highlight table {
+    border-radius: var(--radius)
+}
+
+.post-content .highlight:not(table),
 .post-content pre {
-    margin: auto calc(var(--gap) * -1) 32px;
+    margin: 10px auto;
     background: var(--hljs-bg) !important;
     border-radius: var(--radius)
 }
@@ -203,13 +217,13 @@
 }
 
 .post-content blockquote {
-    margin: 0 calc(var(--gap) * -1);
-    padding: 0 32px;
-    border-inline-start: 2px solid var(--primary)
+    margin: 20px 0;
+    padding: 0 14px;
+    border-inline-start: 3px solid var(--primary)
 }
 
 .post-content hr {
-    margin: 30px calc(var(--gap) * -1);
+    margin: 30px 0;
     height: 2px;
     background: var(--tertiary);
     border-top: 0;
@@ -224,11 +238,27 @@
     border-radius: 4px
 }
 
+.post-content img[src*='#center'] {
+    margin: auto
+}
+
+.post-content figure > figcaption {
+    color: var(--primary);
+    font-size: 16px;
+    font-weight: bold;
+    margin: 24px 0 16px;
+}
+
 .toc {
-    margin-bottom: 40px;
+    margin: 0 2px 40px 2px;
     border: 1px solid var(--border);
+    background: var(--code-bg);
     border-radius: var(--radius);
-    padding: .5em
+    padding: .4em
+}
+
+.dark .toc {
+    background: var(--entry);
 }
 
 .toc details summary {
@@ -245,7 +275,7 @@
     font-weight: 500
 }
 
-.toc blockquote {
+.toc .inner {
     margin: 0 20px;
     padding: 10px 20px
 }
@@ -269,8 +299,11 @@
 }
 
 .post-tags a,
-.share-buttons {
-    border: 1px solid var(--tertiary)
+.share-buttons,
+.paginav {
+    border-radius: var(--radius);
+    background: var(--code-bg);
+    border: 1px solid var(--border)
 }
 
 .post-tags a {
@@ -280,19 +313,19 @@
     color: var(--secondary);
     font-size: 14px;
     line-height: 34px;
-    background: var(--code-bg);
-    border-radius: 4px
+    background: var(--code-bg)
 }
 
-.post-tags a:hover {
+.post-tags a:hover,
+.paginav a:hover {
     background: var(--border)
 }
 
 .share-buttons {
-    margin-top: var(--gap);
+    margin: 14px 0;
     padding-inline-start: var(--radius);
-    border-radius: var(--radius);
     display: flex;
+    justify-content: center;
     overflow-x: auto
 }
 
@@ -311,7 +344,7 @@
     transition: transform .1s
 }
 
-.share-buttons svg:hover {
+.share-buttons svg:active {
     transform: scale(.96)
 }
 
@@ -327,9 +360,62 @@ h6:hover .anchor {
     font-weight: 500
 }
 
-@media screen and (max-width:600px) {
-    .post-content blockquote {
-        margin: 0 calc(var(--gap) * -1);
-        padding: 0 21px
-    }
+.post-content :not(table) ::-webkit-scrollbar-thumb {
+    border: 2px solid var(--hljs-bg);
+    background: rgba(255, 255, 255, 0.32)
+}
+
+.post-content :not(table) ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.56)
+}
+
+.gist table::-webkit-scrollbar-thumb {
+    border: 2px solid rgb(255, 255, 255);
+    background: rgba(0, 0, 0, 0.32)
+}
+
+.gist table::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.56)
+}
+
+.post-content table::-webkit-scrollbar-thumb {
+    border-width: 2px;
+}
+
+.paginav {
+    margin: 10px 0;
+    display: flex;
+    line-height: 30px;
+    border-radius: var(--radius);
+}
+
+.paginav a {
+    padding-inline-start: 14px;
+    padding-inline-end: 14px;
+    border-radius: var(--radius);
+}
+
+.paginav .title {
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-size: small;
+    color: var(--secondary);
+}
+
+.paginav .prev,
+.paginav .next {
+    width: 50%;
+}
+
+.paginav span:hover:not(.title) {
+    box-shadow: 0 1px 0;
+}
+
+.paginav .next {
+    margin-inline-start: auto;
+    text-align: right;
+}
+
+[dir="rtl"] .paginav .next {
+    text-align: left;
 }
