@@ -14,3 +14,9 @@
 
 - id: translations
   translation: "Übersetzungen"
+
+- id: license
+  translation: Lizenz
+
+- id: license_text
+  translation: Dieses Werk steht unter der 
