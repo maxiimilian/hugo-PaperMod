@@ -29,6 +29,10 @@
     --border: rgb(51, 51, 51);
 }
 
+body:not(.dark) {
+    --hljs-bg: #f0f0f0;
+}
+
 .list {
     background: var(--code-bg);
 }
