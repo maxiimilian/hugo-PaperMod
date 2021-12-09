@@ -24,3 +24,8 @@ sed s,^\\.,body:not\(\.dark\)\ \.,g light.css > tmp
 mv tmp hljs-light.css
 ```
 Additionally, find the `background` key in `.hljs` and delete it or comment it out. It will interfere with the variable set in `theme-vars.css`.
+
+## Update 09.12.2021
+After merge with upstream `papermod` 
+ * the syntax highlighting in light mode doesn't quite work. There is some problem with the css.
+ * Also, if `an-old-hope.min.css` is renamed to the same name but without `.min.`, hugo cannot compile... Some hard coded dependency?
