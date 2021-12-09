@@ -20,3 +20,6 @@
 
 - id: license_text
   translation: Dieses Werk steht unter der 
+  
+- id: edit_post
+  translation: "Bearbeiten"
